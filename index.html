@@ -1,35 +1,129 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Streaks: Homeschool Hours</title><style>
-:root{--bg:#F6F8FB;--card:#fff;--ink:#16202B;--sub:#5B6472;--accent:#0F6A8C;--line:#E3E7EE}
-@media (prefers-color-scheme:dark){:root{--bg:#0E1217;--card:#1A2028;--ink:#EEF2F6;--sub:#A3ADBA;--accent:#5CC3E6;--line:#2A323D}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Nunito",system-ui,-apple-system,sans-serif}
-.wrap{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+<title>Streaks: Homeschool Hours Tracker for iPhone</title>
+<meta name="description" content="Log homeschool hours with a tap, keep a photo portfolio, and make a year-end PDF report in seconds. No account, no ads, no tracking. Your records stay in your own iCloud.">
+<meta property="og:title" content="Streaks: Homeschool records in seconds, not hours">
+<meta property="og:description" content="Tap to log hours, snap work samples, and print a year-end report. Private by design: no account, no tracking.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="screens/calendar.webp">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F8FB;--card:#fff;--ink:#16202B;--sub:#5B6472;--accent:#0F6A8C;--accent-ink:#fff;--soft:#E4F1F6;--line:#E3E7EE;--frame:#16202B}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1217;--card:#1A2028;--ink:#EEF2F6;--sub:#A3ADBA;--accent:#5CC3E6;--accent-ink:#0E1217;--soft:#16303B;--line:#2A323D;--frame:#000}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Nunito",system-ui,-apple-system,sans-serif}
+img{max-width:100%}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 16px 64px}
 header{display:flex;align-items:center;gap:12px;margin-bottom:24px}header img{width:48px;height:48px;border-radius:12px}
 header a{font-weight:900;font-size:22px;color:var(--ink);text-decoration:none}
-nav{margin-left:auto;display:flex;gap:16px;font-weight:700}nav a{color:var(--sub);text-decoration:none}
-h1{font-size:40px;line-height:1.15;margin:8px 0 12px;font-weight:900}h2{font-size:24px;margin:36px 0 8px;font-weight:900}
-p,li{color:var(--ink)}.sub{color:var(--sub);font-size:19px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin:14px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.grid .card{margin:0}.card h3{margin:0 0 6px;font-size:18px}.card p{margin:0;color:var(--sub);font-size:15px}
-a{color:var(--accent)}footer{margin-top:48px;color:var(--sub);font-size:14px}
+nav{margin-left:auto;display:flex;gap:16px;font-weight:700}nav a{color:var(--sub);text-decoration:none}nav a:hover{color:var(--ink)}
+h1{font-size:clamp(34px,6vw,52px);line-height:1.08;margin:8px 0 16px;font-weight:900;letter-spacing:-.01em}
+h2{font-size:clamp(26px,4vw,34px);line-height:1.15;margin:0 0 10px;font-weight:900}
+h3{margin:0 0 6px;font-size:18px}
+p{margin:0 0 12px}.sub{color:var(--sub);font-size:19px}
+a{color:var(--accent)}
+.eyebrow{display:inline-block;font-weight:800;font-size:14px;color:var(--accent);background:var(--soft);padding:4px 12px;border-radius:999px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 10px}
+.btn{display:inline-block;font-weight:800;padding:13px 22px;border-radius:14px;text-decoration:none}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}.btn.ghost{border:2px solid var(--line);color:var(--ink)}
+.note{color:var(--sub);font-size:14px}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:24px 0 40px}
+.phone{width:100%;max-width:300px;margin:0 auto;border:9px solid var(--frame);border-radius:44px;overflow:hidden;background:var(--frame);box-shadow:0 24px 60px rgba(22,32,43,.18)}
+.phone img{display:block;width:100%;height:auto}
+.trust{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center;padding:18px 16px;margin:0 0 56px;background:var(--card);border:1px solid var(--line);border-radius:18px;font-weight:800}
+.trust span::before{content:"✓ ";color:var(--accent)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin:0 0 72px}
+.row.flip .text{order:2}
+.text .step{font-weight:900;color:var(--accent);font-size:15px;margin-bottom:6px}
+.text ul{padding-left:20px;margin:8px 0 0}.text li{margin:4px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px}
+.card p{margin:0;color:var(--sub);font-size:15px}
+section{margin:0 0 72px}
+.band{background:var(--soft);border-radius:24px;padding:36px 28px}
+.band p{max-width:620px}
+.center{text-align:center}.center p{margin-left:auto;margin-right:auto}
+footer{margin-top:48px;color:var(--sub);font-size:14px;display:flex;flex-wrap:wrap;gap:8px 20px}
+footer a{color:var(--sub)}
+@media (max-width:760px){
+  .hero,.row{grid-template-columns:1fr;gap:28px}
+  .row.flip .text{order:0}
+  .phone{max-width:260px}
+  header{flex-wrap:wrap}nav{gap:14px;font-size:15px;width:100%;margin-left:0}
+}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet"></head><body><div class="wrap">
-<header><img src="logo.png" alt=""><a href="./">Streaks</a><nav><a href="support.html">Support</a><a href="privacy.html">Privacy</a></nav></header>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet"></head><body><div class="wrap">
+<header><img src="logo.png" alt=""><a href="./">Streaks</a><nav><a href="#tour">How it works</a><a href="support.html">Support</a><a href="privacy.html">Privacy</a></nav></header>
 
-<h1>Homeschool hours, without the hassle.</h1>
-<p class="sub">Tap a subject to start a timer. Snap a photo of their work. Make a year-end report in one tap. Streaks keeps your records so you can keep teaching.</p>
-<div class="grid">
-<div class="card"><h3>One-tap timers</h3><p>Start, pause and finish a subject in a tap, or add time afterward.</p></div>
-<div class="card"><h3>See the whole year</h3><p>Week, month and year calendars, hours by subject and a goal ring.</p></div>
-<div class="card"><h3>Field trips &amp; events</h3><p>Plan co-op days and outings, get reminders, log them with photos and voice notes.</p></div>
-<div class="card"><h3>Portfolio</h3><p>Photos labeled by subject automatically. Star the best for the report.</p></div>
-<div class="card"><h3>Year-end PDF</h3><p>Hours by subject and month, attendance, field trips and work samples.</p></div>
-<div class="card"><h3>Catch up mid-year</h3><p>Import a spreadsheet, snap a photo of a paper log, or enter totals.</p></div>
+<main>
+<div class="hero">
+  <div>
+    <span class="eyebrow">For homeschool families · iPhone</span>
+    <h1>Homeschool records in seconds, not hours.</h1>
+    <p class="sub">Tap a subject to start a timer, snap a photo of their work, and make a year-end report in one tap. Streaks keeps your records so you can keep teaching.</p>
+    <div class="btns">
+      <a class="btn primary" href="support.html#contact">Join the free beta</a>
+      <a class="btn ghost" href="#tour">See how it works</a>
+    </div>
+    <p class="note">Coming soon to the App Store. Any family size, any teaching style.</p>
+  </div>
+  <div class="phone"><img src="screens/calendar.webp" width="720" height="1565" alt="Streaks month calendar showing hours logged each school day in November"></div>
 </div>
-<h2>Private by design</h2>
-<p>No account, no ads, no tracking. Your records stay on your devices and in your own iCloud.</p>
-<h2>Coming soon to the App Store</h2>
-<p>Streaks is in beta testing now. Want to help shape it? <a href="support.html#contact">Get in touch</a>.</p>
 
-<footer>© 2026 Russell Gordon · Streaks: Homeschool Hours</footer></div></body></html>
+<div class="trust"><span>No account</span><span>No ads</span><span>No tracking</span><span>Works offline</span><span>Your own iCloud</span></div>
+
+<div id="tour">
+  <div class="row">
+    <div class="text">
+      <div class="step">Stay balanced</div>
+      <h2>Know where the hours go</h2>
+      <p class="sub">See hours by subject for each kid, every week and month. Spot the subject that's falling behind before the end of the year sneaks up on you.</p>
+    </div>
+    <div class="phone"><img src="screens/subjects.webp" width="720" height="1565" alt="Hours by subject: math, reading, writing, science and more" loading="lazy"></div>
+  </div>
+
+  <div class="row flip">
+    <div class="text">
+      <div class="step">Be ready</div>
+      <h2>Your year-end report, done</h2>
+      <p class="sub">Total hours, days attended and starred work samples are tallied as you go. When it's time to report, preview, print or share in one tap, or export a spreadsheet.</p>
+    </div>
+    <div class="phone"><img src="screens/reports.webp" width="720" height="1565" alt="Reports screen with total hours, days attended and a year-end PDF button" loading="lazy"></div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <div class="step">Look organized</div>
+      <h2>A clean record you can hand to anyone</h2>
+      <p class="sub">The PDF report covers hours by subject and month, an attendance calendar, field trips and work samples, with a line to sign. It's built around the records most states ask you to keep.</p>
+      <p class="note">Rules vary by state, so please check what yours requires.</p>
+    </div>
+    <div class="phone"><img src="screens/pdf-p1.webp" width="720" height="1565" alt="Year-end PDF report with hours by subject and by month" loading="lazy"></div>
+  </div>
+</div>
+
+<section>
+  <h2>Everything a homeschool record needs</h2>
+  <div class="grid">
+    <div class="card"><h3>One-tap timers</h3><p>Start, pause and finish a subject in a tap, or add time afterward.</p></div>
+    <div class="card"><h3>Every kid, their own way</h3><p>Each child gets an avatar, their own subjects and their own streak.</p></div>
+    <div class="card"><h3>Field trips and events</h3><p>Plan co-op days and outings, get reminders, and log them with photos and voice notes.</p></div>
+    <div class="card"><h3>Portfolio</h3><p>Photos of their work, labeled by subject. Star the best for the report.</p></div>
+    <div class="card"><h3>Year-end PDF</h3><p>Hours by subject and month, attendance, field trips and work samples.</p></div>
+    <div class="card"><h3>Catch up mid-year</h3><p>Import a spreadsheet, snap a photo of a paper log, or enter totals.</p></div>
+  </div>
+</section>
+
+<section class="band">
+  <h2>Private by design</h2>
+  <p class="sub">Your kids' records never leave your family. There's no account to create and nothing to sign in to. Records stay on your devices and back up to your own iCloud. We never see them.</p>
+  <p><a href="privacy.html">Read our privacy policy</a></p>
+</section>
+
+<section class="center">
+  <h2>Built with homeschool families</h2>
+  <p class="sub">Streaks is in beta testing now, and parents' feedback shapes every update. Try it free on TestFlight and tell us what would make your days easier.</p>
+  <div class="btns" style="justify-content:center"><a class="btn primary" href="support.html#contact">Join the free beta</a></div>
+</section>
+</main>
+
+<footer><span>© 2026 Russell Gordon · Streaks: Homeschool Hours</span><a href="support.html">Support</a><a href="privacy.html">Privacy</a></footer></div></body></html>
